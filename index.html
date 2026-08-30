@@ -1,0 +1,1535 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stronovo — Agencja interaktywna | Strony, które pracują na Twój sukces</title>
+<meta name="description" content="Stronovo — projektujemy i wdrażamy szybkie, eleganckie strony internetowe dla firm lokalnych i e-commerce. Przejrzysty cennik, opieka po wdrożeniu.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ============ ROOT / RESET ============ */
+:root{
+  --bg-0:#ffffff;
+  --bg-1:#f4f8fa;
+  --bg-2:#f0f5f7;
+  --card:#ffffff;
+  --card-2:#f8fbfc;
+  --ink:#1a2b3c;
+  --ink-2:#34495e;
+  --muted:#5c6b73;
+  --faint:#8899a6;
+  --line:rgba(10,127,163,.15);
+  --line-soft:rgba(10,127,163,.08);
+  --brass:#0a7fa3;
+  --brass-2:#086886;
+  --brass-dim:rgba(10,127,163,.10);
+  --brass-line:rgba(10,127,163,.30);
+  --slate:#5c6b73;
+  --err:#d9534f;
+  --radius:12px;
+  --radius-sm:9px;
+  --font-d:'Plus Jakarta Sans',sans-serif;
+  --font-b:'Inter',sans-serif;
+  --font-m:'JetBrains Mono',monospace;
+  --ease:cubic-bezier(.22,.61,.21,1);
+  --ease-io:cubic-bezier(.65,0,.35,1);
+  --shadow-lg:0 40px 90px -30px rgba(10,127,163,.12);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:
+    radial-gradient(1200px 620px at 72% -8%, rgba(10,127,163,.06), transparent 60%),
+    radial-gradient(900px 520px at -8% 34%, rgba(10,127,163,.04), transparent 55%),
+    var(--bg-0);
+  color:var(--ink);
+  font-family:var(--font-b);
+  font-weight:400;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+/* ziarno filmowe */
+body::after{
+  content:"";position:fixed;inset:0;z-index:2000;pointer-events:none;opacity:.025;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+::selection{background:var(--brass);color:#ffffff}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;background:none;border:none;color:inherit}
+ul{list-style:none}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:#f4f8fa}
+::-webkit-scrollbar-thumb{background:#b0c4de;border-radius:8px;border:2px solid #f4f8fa}
+::-webkit-scrollbar-thumb:hover{background:var(--brass)}
+
+.skip{position:absolute;left:-9999px;top:12px;z-index:3000;background:var(--brass);color:#ffffff;padding:10px 18px;border-radius:8px;font-weight:600}
+.skip:focus{left:12px}
+.container{max-width:1180px;margin:0 auto;padding:0 clamp(20px,4vw,40px)}
+.section{padding:clamp(90px,10vw,140px) 0;position:relative}
+section{scroll-margin-top:96px}
+
+/* ============ TYPOGRAFIA ============ */
+.eyebrow{
+  font-family:var(--font-m);font-size:11px;font-weight:500;
+  letter-spacing:.28em;text-transform:uppercase;color:var(--brass);
+  display:inline-flex;align-items:center;gap:14px;margin-bottom:22px;
+}
+.eyebrow::before{content:"";width:30px;height:1px;background:var(--brass-line)}
+h1,h2,h3{font-family:var(--font-d);font-weight:700;letter-spacing:-.02em;line-height:1.1}
+.sec-title{font-size:clamp(30px,4vw,46px);line-height:1.12}
+.sec-lead{color:var(--muted);font-size:16.5px;font-weight:300;max-width:56ch;margin-top:20px}
+.mono{font-family:var(--font-m)}
+
+/* ============ PRELOADER ============ */
+#preloader{
+  position:fixed;inset:0;z-index:4000;background:#ffffff;
+  display:flex;align-items:center;justify-content:center;flex-direction:column;gap:20px;
+  transition:transform .95s var(--ease-io),opacity .5s;
+}
+body.is-loaded #preloader{transform:translateY(-101%);pointer-events:none}
+.pre-logo{display:flex;align-items:center;gap:14px;overflow:hidden}
+.pre-logo .word{font-family:var(--font-d);font-weight:800;font-size:34px;letter-spacing:.02em;display:flex}
+.pre-logo .word span{display:inline-block;transform:translateY(120%);animation:preUp .7s var(--ease) forwards}
+.pre-logo .word span:nth-child(1){animation-delay:.05s}
+.pre-logo .word span:nth-child(2){animation-delay:.1s}
+.pre-logo .word span:nth-child(3){animation-delay:.15s}
+.pre-logo .word span:nth-child(4){animation-delay:.2s}
+.pre-logo .word span:nth-child(5){animation-delay:.25s}
+.pre-logo .word span:nth-child(6){animation-delay:.3s}
+.pre-logo .word span:nth-child(7){animation-delay:.35s}
+.pre-logo .word span:nth-child(8){animation-delay:.4s;color:var(--brass)}
+@keyframes preUp{to{transform:none}}
+.pre-bar{width:120px;height:2px;background:var(--line);border-radius:2px;overflow:hidden}
+.pre-bar i{display:block;height:100%;width:0;background:var(--brass);animation:preBar 1s .15s var(--ease-io) forwards}
+@keyframes preBar{to{width:100%}}
+
+/* pasek postępu scrolla */
+#progress{position:fixed;top:0;left:0;height:2px;width:0;background:var(--brass);z-index:1500}
+
+/* ============ HEADER ============ */
+header{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  transition:background .4s,border-color .4s,backdrop-filter .4s;
+  border-bottom:1px solid transparent;
+}
+header.scrolled{
+  background:rgba(255,255,255,.88);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-bottom-color:var(--line-soft);
+}
+.nav{display:flex;align-items:center;justify-content:space-between;height:76px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-mark{height:34px;width:auto;flex:none;object-fit:contain}
+.brand-word{font-family:var(--font-d);font-weight:800;font-size:20px;letter-spacing:.01em}
+.brand-word i{font-style:normal;color:var(--brass)}
+.nav-links{display:flex;gap:6px}
+.nav-links a{
+  position:relative;font-size:13.5px;font-weight:500;color:var(--muted);
+  padding:9px 14px;border-radius:8px;transition:color .25s,background .25s;
+}
+.nav-links a:hover{color:var(--ink);background:rgba(10,127,163,.06)}
+.nav-links a.active{color:var(--ink)}
+.nav-links a.active::after{
+  content:"";position:absolute;left:14px;right:14px;bottom:4px;height:2px;
+  background:var(--brass);border-radius:2px;
+}
+.nav-cta{display:flex;align-items:center;gap:14px}
+
+/* przyciski */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  font-family:var(--font-d);font-weight:600;font-size:14.5px;letter-spacing:.01em;
+  padding:14px 26px;border-radius:10px;transition:all .3s var(--ease);white-space:nowrap;
+}
+.btn svg{width:16px;height:16px;transition:transform .3s var(--ease)}
+.btn-primary{background:var(--brass);color:#ffffff;box-shadow:0 10px 30px -12px rgba(10,127,163,.35)}
+.btn-primary:hover{background:var(--brass-2);transform:translateY(-2px);box-shadow:0 16px 36px -12px rgba(10,127,163,.4)}
+.btn-primary:hover svg{transform:translateX(3px)}
+.btn-ghost{border:1px solid var(--line);color:var(--ink-2)}
+.btn-ghost:hover{border-color:var(--brass-line);color:var(--ink);background:var(--brass-dim);transform:translateY(-2px)}
+.btn-sm{padding:10px 20px;font-size:13.5px}
+.btn-block{width:100%}
+
+/* hamburger */
+.burger{display:none;flex-direction:column;gap:6px;padding:10px;z-index:1200}
+.burger span{width:24px;height:2px;background:var(--ink);border-radius:2px;transition:.35s var(--ease)}
+.burger.open span:nth-child(1){transform:translateY(8px) rotate(45deg)}
+.burger.open span:nth-child(2){opacity:0}
+.burger.open span:nth-child(3){transform:translateY(-8px) rotate(-45deg)}
+
+/* menu mobilne */
+.m-menu{
+  position:fixed;inset:0;z-index:1100;background:rgba(255,255,255,.97);
+  backdrop-filter:blur(14px);display:flex;flex-direction:column;justify-content:center;
+  padding:0 clamp(28px,8vw,80px);gap:6px;
+  opacity:0;pointer-events:none;transition:opacity .4s;
+}
+.m-menu.open{opacity:1;pointer-events:auto}
+.m-menu a{
+  font-family:var(--font-d);font-size:clamp(28px,7vw,44px);font-weight:700;letter-spacing:-.02em;
+  color:var(--ink-2);padding:12px 0;border-bottom:1px solid var(--line-soft);
+  display:flex;justify-content:space-between;align-items:center;
+  opacity:0;transform:translateY(20px);transition:.5s var(--ease);
+}
+.m-menu.open a{opacity:1;transform:none}
+.m-menu a:hover{color:var(--brass)}
+.m-menu a .mono{font-size:12px;color:var(--faint)}
+.m-menu.open a:nth-child(1){transition-delay:.08s}.m-menu.open a:nth-child(2){transition-delay:.14s}
+.m-menu.open a:nth-child(3){transition-delay:.2s}.m-menu.open a:nth-child(4){transition-delay:.26s}
+.m-menu.open a:nth-child(5){transition-delay:.32s}
+
+/* ============ HERO ============ */
+.hero{padding:clamp(150px,18vh,190px) 0 0;position:relative}
+.hero-grid{display:grid;grid-template-columns:7fr 5fr;gap:clamp(40px,5vw,70px);align-items:center}
+.hero-eyebrow{margin-bottom:26px}
+.hero-title{font-size:clamp(37px,5.4vw,66px);font-weight:800;line-height:1.06}
+.hero-title .line{display:block;overflow:hidden;padding-bottom:.1em;margin-bottom:-.1em}
+.hero-title .line-in{display:inline-block;transform:translateY(115%);transition:transform 1s var(--ease-io)}
+body.is-loaded .hero-title .line:nth-child(1) .line-in{transition-delay:.55s;transform:none}
+body.is-loaded .hero-title .line:nth-child(2) .line-in{transition-delay:.68s;transform:none}
+body.is-loaded .hero-title .line:nth-child(3) .line-in{transition-delay:.81s;transform:none}
+.hero-title .acc{font-style:italic;font-weight:600;color:var(--brass);position:relative;display:inline-block}
+.u-draw{position:absolute;left:-2%;bottom:-.22em;width:104%;height:.32em;overflow:visible}
+.u-draw path{fill:none;stroke:var(--brass);stroke-width:3;stroke-linecap:round;
+  stroke-dasharray:140;stroke-dashoffset:140;transition:stroke-dashoffset 1s 1.5s var(--ease-io)}
+body.is-loaded .u-draw path{stroke-dashoffset:0}
+.hero-sub{
+  color:var(--muted);font-size:16.5px;font-weight:300;max-width:50ch;margin:28px 0 38px;
+  opacity:0;transform:translateY(16px);transition:all .8s 1s var(--ease);
+}
+body.is-loaded .hero-sub{opacity:1;transform:none}
+.hero-ctas{display:flex;gap:16px;flex-wrap:wrap;opacity:0;transform:translateY(16px);transition:all .8s 1.15s var(--ease)}
+body.is-loaded .hero-ctas{opacity:1;transform:none}
+.hero-trust{display:flex;gap:36px;flex-wrap:wrap;margin-top:52px;opacity:0;transition:opacity .8s 1.35s}
+body.is-loaded .hero-trust{opacity:1}
+.trust-item .num{font-family:var(--font-d);font-weight:800;font-size:26px;letter-spacing:-.02em}
+.trust-item .num em{font-style:normal;color:var(--brass)}
+.trust-item .lbl{font-family:var(--font-m);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);margin-top:2px}
+
+/* mock przeglądarki */
+.hero-visual{position:relative;opacity:0;transform:translateY(26px) scale(.98);transition:all 1s 1.2s var(--ease)}
+body.is-loaded .hero-visual{opacity:1;transform:none}
+.hero-visual::before{
+  content:"";position:absolute;inset:-60px;z-index:-1;
+  background:radial-gradient(closest-side, rgba(10,127,163,.08), transparent 72%);
+}
+.browser{
+  background:#ffffff;border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  box-shadow:var(--shadow-lg);transform:rotate(-1.2deg);transition:transform .6s var(--ease);
+}
+.hero-visual:hover .browser{transform:rotate(0deg)}
+.browser-bar{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--line-soft)}
+.b-dot{width:9px;height:9px;border-radius:50%}
+.b-dot.r{background:#ff5f56}.b-dot.y{background:#ffbd2e}.b-dot.g{background:#27c93f}
+.b-url{
+  flex:1;margin-left:8px;background:rgba(10,127,163,.06);border-radius:7px;
+  font-family:var(--font-m);font-size:11px;color:var(--faint);padding:5px 12px;
+  display:flex;align-items:center;gap:7px;
+}
+.b-url svg{width:10px;height:10px;stroke:var(--brass)}
+.browser-view{position:relative;aspect-ratio:3/2;overflow:hidden}
+.browser-view img{width:100%;height:100%;object-fit:cover;animation:kb 16s ease-in-out infinite alternate}
+@keyframes kb{from{transform:scale(1.05) translate(0,0)}to{transform:scale(1.16) translate(-2.5%,2%)}}
+.browser-view::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.15),rgba(255,255,255,.65) 85%)}
+.mock-ui{position:absolute;left:22px;bottom:20px;right:22px;z-index:2}
+.mock-ui .bar{height:8px;border-radius:4px;background:rgba(22,36,43,.8)}
+.mock-ui .bar.b1{width:52%;margin-bottom:9px}
+.mock-ui .bar.b2{width:34%;background:rgba(22,36,43,.3)}
+.mock-ui .mock-btn{
+  display:inline-block;margin-top:14px;background:var(--brass);color:#ffffff;
+  font-family:var(--font-d);font-weight:700;font-size:11px;padding:8px 16px;border-radius:7px;
+}
+.chip{
+  position:absolute;background:rgba(255,255,255,.95);backdrop-filter:blur(8px);
+  border:1px solid var(--line);border-radius:11px;padding:13px 17px;
+  display:flex;align-items:center;gap:12px;box-shadow:0 20px 50px -20px rgba(10,127,163,.15);z-index:3;
+  animation:float 7s ease-in-out infinite;
+}
+.chip .ico{width:34px;height:34px;border-radius:9px;background:var(--brass-dim);display:grid;place-items:center;flex:none}
+.chip .ico svg{width:17px;height:17px;stroke:var(--brass)}
+.chip .t1{font-family:var(--font-d);font-weight:700;font-size:13.5px;line-height:1.2}
+.chip .t2{font-family:var(--font-m);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.chip-speed{top:-24px;right:-14px}
+.chip-book{bottom:-22px;left:-18px;animation-delay:-3.5s}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+
+/* marquee */
+.marquee{
+  margin-top:clamp(70px,9vw,110px);border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft);
+  overflow:hidden;padding:20px 0;
+}
+.m-track{display:flex;width:max-content;animation:mq 32s linear infinite}
+.m-set{display:flex;align-items:center}
+.m-set span{
+  font-family:var(--font-m);font-size:11.5px;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--faint);padding:0 26px;white-space:nowrap;
+}
+.m-set i{color:var(--brass);font-style:normal;font-size:10px}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* ============ DLACZEGO STRONOVO ============ */
+.why-grid{display:grid;grid-template-columns:5fr 7fr;gap:clamp(44px,6vw,80px);align-items:start}
+.why-left{position:sticky;top:120px}
+.why-left .link-more{
+  display:inline-flex;align-items:center;gap:10px;margin-top:30px;
+  font-family:var(--font-d);font-weight:600;font-size:14px;color:var(--brass);
+}
+.why-left .link-more svg{width:15px;height:15px;transition:transform .3s}
+.why-left .link-more:hover svg{transform:translateX(4px)}
+.value-card{
+  position:relative;display:flex;gap:22px;background:var(--card);border:1px solid var(--line-soft);
+  border-radius:var(--radius);padding:28px 30px;margin-bottom:18px;overflow:hidden;
+  transition:transform .4s var(--ease),border-color .4s,background .4s;
+}
+.value-card:hover{transform:translateY(-4px);border-color:var(--brass-line);background:var(--card-2)}
+.value-card::before{
+  content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--brass);
+  transform:scaleY(0);transform-origin:top;transition:transform .45s var(--ease);
+}
+.value-card:hover::before{transform:scaleY(1)}
+.v-icon{
+  width:48px;height:48px;flex:none;border-radius:11px;background:var(--brass-dim);
+  display:grid;place-items:center;transition:background .4s;
+}
+.value-card:hover .v-icon{background:rgba(10,127,163,.15)}
+.v-icon svg{width:22px;height:22px;stroke:var(--brass)}
+.value-card h3{font-size:18px;margin-bottom:8px;font-weight:700}
+.value-card p{color:var(--muted);font-size:14.5px;font-weight:300}
+.v-stat{margin-top:14px;font-family:var(--font-m);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--brass)}
+.v-index{
+  position:absolute;top:22px;right:26px;font-family:var(--font-m);font-size:12px;color:var(--faint);
+}
+
+/* ============ CENNIK / ZAKŁADKI ============ */
+#oferta{background:var(--bg-1);border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft)}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;flex-wrap:wrap;margin-bottom:56px}
+.tabs-wrap{position:relative;margin-bottom:48px;overflow-x:auto;scrollbar-width:none}
+.tabs-wrap::-webkit-scrollbar{display:none}
+.tabs{position:relative;display:flex;gap:6px;background:var(--bg-2);border:1px solid var(--line-soft);border-radius:13px;padding:6px;width:max-content}
+.tab-ind{
+  position:absolute;top:6px;bottom:6px;background:var(--brass-dim);border:1px solid var(--brass-line);
+  border-radius:9px;transition:transform .45s var(--ease),width .45s var(--ease);z-index:0;
+}
+.tab-btn{
+  position:relative;z-index:1;font-family:var(--font-m);font-size:11.5px;font-weight:500;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+  padding:12px 20px;border-radius:9px;transition:color .3s;white-space:nowrap;
+}
+.tab-btn:hover{color:var(--ink-2)}
+.tab-btn.active{color:var(--brass-2)}
+.panel{display:none}
+.panel.active{display:block;animation:panelIn .55s var(--ease)}
+@keyframes panelIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+/* karty pakietów */
+.plans{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.plan{
+  position:relative;background:var(--card);border:1px solid var(--line-soft);border-radius:14px;
+  padding:38px 36px;display:flex;flex-direction:column;transition:transform .4s var(--ease),border-color .4s,box-shadow .4s;
+}
+.plan:hover{transform:translateY(-5px);border-color:var(--line);box-shadow:var(--shadow-lg)}
+.plan.featured{border-color:var(--brass-line);background:linear-gradient(180deg,rgba(10,127,163,.05),transparent 45%),var(--card-2)}
+.plan-badge{
+  position:absolute;top:-13px;left:36px;background:var(--brass);color:#ffffff;
+  font-family:var(--font-m);font-size:10px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;
+  padding:6px 14px;border-radius:7px;
+}
+.plan-name{font-family:var(--font-d);font-size:15px;font-weight:600;color:var(--ink-2);display:flex;align-items:center;gap:10px}
+.plan-name svg{width:17px;height:17px;stroke:var(--brass);flex:none}
+.plan-tag{font-family:var(--font-m);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-top:8px}
+.plan-price{font-family:var(--font-d);font-weight:800;font-size:clamp(38px,4vw,50px);letter-spacing:-.03em;margin:24px 0 4px;line-height:1}
+.plan-price .dec{font-size:.55em;color:var(--muted);font-weight:600}
+.plan-price .cur{font-size:.42em;color:var(--brass);font-weight:700;margin-left:6px}
+.plan-price .per{font-size:.34em;color:var(--faint);font-weight:500;margin-left:8px;letter-spacing:0}
+.plan-desc{color:var(--muted);font-size:14px;font-weight:300;margin-bottom:26px}
+.plan hr{border:none;border-top:1px solid var(--line-soft);margin-bottom:24px}
+.feat{display:flex;gap:12px;align-items:flex-start;font-size:14.5px;color:var(--ink-2);margin-bottom:13px;font-weight:300}
+.feat svg{width:17px;height:17px;stroke:var(--brass);flex:none;margin-top:3px}
+.feat strong{font-weight:600}
+.gratis{
+  display:flex;gap:12px;align-items:center;background:var(--brass-dim);border:1px dashed var(--brass-line);
+  border-radius:10px;padding:13px 16px;font-size:13.5px;font-weight:500;color:var(--brass-2);margin:8px 0 26px;
+}
+.gratis svg{width:18px;height:18px;stroke:var(--brass);flex:none}
+.plan .btn{margin-top:auto}
+.plan-meta{margin-top:16px;text-align:center;font-family:var(--font-m);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+
+/* usługi dodatkowe */
+.addons{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.addon{
+  display:flex;gap:20px;align-items:flex-start;background:var(--card);border:1px solid var(--line-soft);
+  border-radius:var(--radius);padding:26px 28px;transition:transform .35s var(--ease),border-color .35s;
+}
+.addon:hover{transform:translateY(-3px);border-color:var(--brass-line)}
+.addon .v-icon{width:44px;height:44px}
+.addon h3{font-size:16.5px;margin-bottom:6px}
+.addon p{color:var(--muted);font-size:13.5px;font-weight:300;max-width:40ch}
+.addon-price{
+  margin-left:auto;flex:none;font-family:var(--font-d);font-weight:800;font-size:19px;color:var(--brass);
+  white-space:nowrap;
+}
+.addon-price small{display:block;font-family:var(--font-m);font-size:9.5px;letter-spacing:.14em;color:var(--faint);text-align:right;font-weight:400}
+
+/* moduły */
+.modules{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.module{
+  background:var(--card);border:1px solid var(--line-soft);border-radius:14px;padding:32px 30px;
+  display:flex;flex-direction:column;transition:transform .35s var(--ease),border-color .35s;
+}
+.module:hover{transform:translateY(-4px);border-color:var(--brass-line)}
+.module .v-icon{width:46px;height:46px;margin-bottom:22px}
+.module h3{font-size:17.5px;margin-bottom:8px}
+.module .m-price{font-family:var(--font-d);font-weight:800;font-size:26px;color:var(--brass);margin-bottom:14px;letter-spacing:-.02em}
+.module p{color:var(--muted);font-size:13.5px;font-weight:300;margin-bottom:20px}
+.module .feat{font-size:13.5px;margin-bottom:10px}
+.module .btn{margin-top:auto}
+.oferta-note{
+  margin-top:56px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;
+  background:var(--bg-2);border:1px solid var(--line-soft);border-radius:var(--radius);padding:26px 32px;
+}
+.oferta-note h3{font-size:18px}
+.oferta-note p{color:var(--muted);font-size:14px;font-weight:300;margin-top:4px}
+
+/* ============ OPINIE ============ */
+.summary-box{text-align:right}
+.summary-box .big{font-family:var(--font-d);font-weight:800;font-size:52px;line-height:1;letter-spacing:-.03em}
+.summary-box .big em{font-style:normal;color:var(--brass);font-size:.55em}
+.stars{display:flex;gap:3px}
+.stars svg{width:15px;height:15px;fill:var(--brass)}
+.stars.lg svg{width:17px;height:17px}
+.summary-box .src{font-family:var(--font-m);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-top:8px}
+.summary-box .stars{justify-content:flex-end;margin-top:8px}
+
+.car-wrap{position:relative}
+.car-track{
+  display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;
+  padding:10px 4px 26px;cursor:grab;scrollbar-width:none;
+}
+.car-track::-webkit-scrollbar{display:none}
+.car-track.dragging{cursor:grabbing;scroll-snap-type:none}
+.t-card{
+  flex:0 0 min(480px,86%);scroll-snap-align:start;background:var(--card);border:1px solid var(--line-soft);
+  border-radius:14px;padding:34px 34px 30px;display:flex;flex-direction:column;
+  transition:border-color .35s,transform .35s var(--ease);user-select:none;
+}
+.t-card:hover{border-color:var(--line);transform:translateY(-3px)}
+.t-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.t-mark{font-family:var(--font-d);font-size:52px;line-height:.5;color:var(--brass);opacity:.5}
+.t-card blockquote{font-size:15.5px;font-weight:300;color:var(--ink-2);line-height:1.75;flex:1}
+.t-author{display:flex;align-items:center;gap:14px;margin-top:26px;padding-top:22px;border-top:1px solid var(--line-soft)}
+.t-author img{width:46px;height:46px;border-radius:50%;object-fit:cover;border:1px solid var(--line)}
+.t-author .nm{font-family:var(--font-d);font-weight:700;font-size:14.5px}
+.t-author .rl{font-size:12.5px;color:var(--muted);margin-top:1px}
+.t-intro{
+  background:linear-gradient(160deg,rgba(10,127,163,.06),transparent 55%),var(--card-2);
+  border-color:var(--brass-line);justify-content:center;
+}
+.t-intro .huge{font-family:var(--font-d);font-weight:800;font-size:72px;line-height:1;letter-spacing:-.03em}
+.t-intro .huge em{font-style:normal;color:var(--brass);font-size:.5em}
+.t-intro p{color:var(--muted);font-size:14px;font-weight:300;margin-top:14px;max-width:32ch}
+.car-nav{display:flex;align-items:center;gap:18px;margin-top:10px}
+.car-btn{
+  width:46px;height:46px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;
+  transition:all .3s var(--ease);
+}
+.car-btn:hover{border-color:var(--brass-line);background:var(--brass-dim)}
+.car-btn svg{width:17px;height:17px;stroke:var(--ink-2)}
+.car-progress{flex:1;height:2px;background:var(--line-soft);border-radius:2px;overflow:hidden}
+.car-progress i{display:block;height:100%;width:0;background:var(--brass);transition:width .2s}
+.car-count{font-family:var(--font-m);font-size:11px;letter-spacing:.14em;color:var(--faint)}
+
+/* ============ KONTAKT ============ */
+#kontakt{background:var(--bg-1);border-top:1px solid var(--line-soft)}
+.contact-grid{display:grid;grid-template-columns:5fr 7fr;gap:clamp(44px,6vw,80px);align-items:start}
+.c-list{margin-top:38px;display:flex;flex-direction:column;gap:8px}
+.c-item{display:flex;align-items:center;gap:16px;padding:15px 0;border-bottom:1px solid var(--line-soft)}
+.c-item .v-icon{width:42px;height:42px}
+.c-item .lbl{font-family:var(--font-m);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
+.c-item .val{font-family:var(--font-d);font-weight:600;font-size:15.5px;margin-top:2px}
+.c-item a.val:hover{color:var(--brass)}
+.avail{
+  display:inline-flex;align-items:center;gap:10px;margin-top:30px;background:var(--brass-dim);
+  border:1px solid var(--brass-line);border-radius:30px;padding:9px 18px;
+  font-family:var(--font-m);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brass-2);
+}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--brass);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(10,127,163,.4)}50%{box-shadow:0 0 0 6px rgba(10,127,163,0)}}
+
+.form-card{
+  position:relative;background:var(--card);border:1px solid var(--line-soft);border-radius:16px;
+  padding:clamp(28px,4vw,44px);overflow:hidden;
+}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.field{display:flex;flex-direction:column;gap:8px}
+.field.full{grid-column:1/-1}
+.field label{font-family:var(--font-m);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.field input,.field select,.field textarea{
+  background:rgba(10,127,163,.03);border:1px solid var(--line);border-radius:var(--radius-sm);
+  padding:14px 16px;color:var(--ink);font-family:var(--font-b);font-size:14.5px;
+  transition:border-color .3s,box-shadow .3s,background .3s;width:100%;
+}
+.field textarea{resize:vertical;min-height:130px}
+.field input:focus,.field select:focus,.field textarea:focus{
+  outline:none;border-color:var(--brass-line);box-shadow:0 0 0 3px var(--brass-dim);background:rgba(10,127,163,.06);
+}
+.field input::placeholder,.field textarea::placeholder{color:var(--faint)}
+.field.err input,.field.err select,.field.err textarea{border-color:var(--err)}
+.field .msg{font-size:11.5px;color:var(--err);display:none}
+.field.err .msg{display:block}
+.field select{
+  appearance:none;-webkit-appearance:none;cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%235c6b73' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 16px center;
+}
+.field select option{background:#ffffff;color:var(--ink)}
+.consent{font-size:11.5px;color:var(--faint);grid-column:1/-1;line-height:1.6}
+.form-foot{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:6px}
+.form-foot .hint{font-family:var(--font-m);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.btn.loading{pointer-events:none;opacity:.75}
+.btn.loading .btn-label{display:none}
+.btn .spinner{display:none;width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#ffffff;border-radius:50%;animation:spin .7s linear infinite}
+.btn.loading .spinner{display:block}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.form-success{
+  position:absolute;inset:0;background:var(--card);border-radius:inherit;z-index:5;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px;
+  opacity:0;pointer-events:none;transition:opacity .5s;
+}
+.form-success.show{opacity:1;pointer-events:auto}
+.ok-ring{width:84px;height:84px;margin-bottom:26px}
+.ok-ring circle{fill:none;stroke:var(--brass-line);stroke-width:2;stroke-dasharray:260;stroke-dashoffset:260}
+.ok-ring path{fill:none;stroke:var(--brass);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:60;stroke-dashoffset:60}
+.form-success.show .ok-ring circle{animation:draw 1s .1s var(--ease-io) forwards}
+.form-success.show .ok-ring path{animation:draw .5s .8s var(--ease-io) forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.form-success h3{font-size:22px;margin-bottom:10px}
+.form-success p{color:var(--muted);font-size:14.5px;font-weight:300;max-width:38ch;margin-bottom:28px}
+
+/* ============ FOOTER ============ */
+footer{border-top:1px solid var(--line-soft);padding:70px 0 0;background:var(--bg-1)}
+.f-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1.2fr;gap:clamp(30px,4vw,60px);padding-bottom:56px}
+.f-brand p{color:var(--muted);font-size:13.5px;font-weight:300;max-width:34ch;margin-top:18px}
+.f-col h4{font-family:var(--font-m);font-size:10.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);margin-bottom:20px}
+.f-col a,.f-col li{display:block;color:var(--muted);font-size:14px;padding:6px 0;transition:color .25s,transform .25s;cursor:pointer}
+.f-col a:hover{color:var(--brass-2);transform:translateX(4px)}
+.f-col li{cursor:default}
+.f-bottom{
+  border-top:1px solid var(--line-soft);padding:24px 0;display:flex;align-items:center;
+  justify-content:space-between;gap:16px;flex-wrap:wrap;
+}
+.f-bottom p{font-size:12.5px;color:var(--faint)}
+.f-bottom .craft{font-family:var(--font-m);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.f-bottom .craft i{color:var(--brass);font-style:normal}
+.to-top{
+  width:44px;height:44px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;
+  transition:all .3s var(--ease);
+}
+.to-top:hover{border-color:var(--brass-line);background:var(--brass-dim);transform:translateY(-3px)}
+.to-top svg{width:16px;height:16px;stroke:var(--ink-2)}
+
+/* ============ REVEAL / GLOW ============ */
+[data-reveal]{opacity:0;transform:translateY(26px);transition:opacity .85s var(--ease),transform .85s var(--ease)}
+[data-reveal].in{opacity:1;transform:none}
+.glow{position:relative;overflow:hidden}
+.glow::before{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .4s;
+  background:radial-gradient(260px circle at var(--mx,50%) var(--my,50%),rgba(10,127,163,.08),transparent 65%);
+}
+.glow:hover::before{opacity:1}
+/* ============ FLOATING INSTAGRAM BUBBLE ============ */
+.ig-float {
+  position: fixed;
+  bottom: clamp(16px, 3vw, 24px);
+  left: clamp(16px, 3vw, 24px);
+  z-index: 1600; /* Wyżej niż header (1000) i pasek postępu (1500) */
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 12px 18px 12px 14px;
+  box-shadow: 0 12px 32px -8px rgba(10, 127, 163, 0.15);
+  text-decoration: none;
+  color: var(--ink);
+  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease), border-color 0.4s;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: igFloatIn 0.8s 2.5s var(--ease) forwards; /* Opóźnienie 2.5s, żeby nie zasłaniać startu */
+}
+.ig-float:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 40px -8px rgba(10, 127, 163, 0.25);
+  border-color: var(--brass-line);
+}
+.ig-float-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--brass-dim);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  transition: background 0.3s;
+}
+.ig-float:hover .ig-float-icon {
+  background: rgba(10, 127, 163, 0.18);
+}
+.ig-float-icon svg {
+  width: 18px;
+  height: 18px;
+  stroke: var(--brass);
+}
+.ig-float-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+.ig-main {
+  font-family: var(--font-d);
+  font-weight: 700;
+  font-size: 13.5px;
+  color: var(--ink);
+}
+.ig-sub {
+  font-family: var(--font-m);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--brass);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 3px;
+}
+.ig-arrow {
+  width: 12px;
+  height: 12px;
+  stroke: var(--brass);
+  transition: transform 0.3s var(--ease);
+}
+.ig-float:hover .ig-arrow {
+  transform: translateX(3px);
+}
+@keyframes igFloatIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Dostosowanie mobilne */
+@media (max-width: 680px) {
+  .ig-float {
+    bottom: 16px;
+    left: 16px;
+    right: 16px; /* Rozciągnięcie na mobilnych dla lepszego trafienia palcem */
+    padding: 12px 16px;
+  }
+}
+
+/* Respektowanie zmniejszonego ruchu */
+@media (prefers-reduced-motion: reduce) {
+  .ig-float { animation: none; opacity: 1; transform: none; }
+}
+/* ============ RESPONSYWNOŚĆ ============ */
+@media(max-width:1080px){
+  .hero-grid{grid-template-columns:1fr;gap:70px}
+  .hero-visual{max-width:620px}
+  .why-grid{grid-template-columns:1fr}
+  .why-left{position:static;margin-bottom:14px}
+  .contact-grid{grid-template-columns:1fr}
+  .modules{grid-template-columns:1fr 1fr}
+}
+@media(max-width:900px){
+  .nav-links,.nav-cta .btn{display:none}
+  .burger{display:flex}
+  .f-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:680px){
+  .plans{grid-template-columns:1fr}
+  .addons{grid-template-columns:1fr}
+  .modules{grid-template-columns:1fr}
+  .form-grid{grid-template-columns:1fr}
+  .chip-speed{top:-18px;right:0}
+  .chip-book{bottom:-18px;left:0}
+  .hero-trust{gap:26px}
+  .sec-head{margin-bottom:40px}
+  .summary-box{text-align:left}
+  .summary-box .stars{justify-content:flex-start}
+  .plan{padding:30px 26px}
+}
+
+/* ============ REDUCED MOTION ============ */
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
+  [data-reveal],.hero-sub,.hero-ctas,.hero-trust,.hero-visual,.hero-title .line-in{opacity:1 !important;transform:none !important}
+  .u-draw path{stroke-dashoffset:0}
+  #preloader{display:none}
+  body.is-loaded #preloader{transform:none}
+  .m-track{animation:none}
+}
+</style>
+</head>
+<body>
+
+<a class="skip" href="#start">Przejdź do treści</a>
+
+<!-- SPRITE IKON -->
+<svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="i-star" viewBox="0 0 16 16"><path d="M8 1.4l2 4.1 4.5.6-3.3 3.1.8 4.5L8 11.5l-4 2.1.8-4.5-3.3-3.1 4.5-.6z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 20 20"><g fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="8.6"/><path d="M6.4 10.3l2.4 2.4 4.8-5"/></g></symbol>
+  <symbol id="i-arrow" viewBox="0 0 20 20"><g fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 10h12M11 5.5l4.5 4.5-4.5 4.5"/></g></symbol>
+  <symbol id="i-down" viewBox="0 0 20 20"><g fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.5v12M5.5 11l4.5 4.5 4.5-4.5"/></g></symbol>
+  <symbol id="i-up" viewBox="0 0 20 20"><g fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 16.5v-12M5.5 9L10 4.5 14.5 9"/></g></symbol>
+  <symbol id="i-chev-l" viewBox="0 0 20 20"><path d="M12.5 4.5L7 10l5.5 5.5" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-chev-r" viewBox="0 0 20 20"><path d="M7.5 4.5L13 10l-5.5 5.5" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 12 14"><g fill="none" stroke-width="1.4" stroke-linecap="round"><rect x="1.5" y="6" width="9" height="6.5" rx="1.6"/><path d="M3.5 6V4.3a2.5 2.5 0 015 0V6"/></g></symbol>
+  <symbol id="i-gauge" viewBox="0 0 24 24"><g fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4.9 17.5a8 8 0 1114.2 0"/><path d="M12 13.8L15.6 9.4"/><circle cx="12" cy="14.2" r="1.4" fill="currentColor" stroke="none"/></g></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><g fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2.8" width="10" height="18.4" rx="2.6"/><path d="M10.4 5.6h3.2"/><path d="M11 18.4h2"/></g></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><g fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.8l7.2 2.7v5.2c0 4.8-3.1 8.1-7.2 10.5-4.1-2.4-7.2-5.7-7.2-10.5V5.5z"/><path d="M8.9 11.9l2.2 2.2 4-4.3"/></g></symbol>
+  <symbol id="i-headset" viewBox="0 0 24 24"><g fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 13.2v-1.5a7.5 7.5 0 0115 0v1.5"/><rect x="3.2" y="12.4" width="4" height="6" rx="1.8"/><rect x="16.8" y="12.4" width="4" height="6" rx="1.8"/><path d="M18.8 18.4v.8a2.6 2.6 0 01-2.6 2.6H13"/></g></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><g fill="none" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="8.6"/><path d="M3.4 12h17.2M12 3.4c2.4 2.3 3.6 5.2 3.6 8.6s-1.2 6.3-3.6 8.6c-2.4-2.3-3.6-5.2-3.6-8.6s1.2-6.3 3.6-8.6z"/></g></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><g fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.2" y="5.4" width="17.6" height="13.2" rx="2.4"/><path d="M3.8 7.4l8.2 5.6 8.2-5.6"/></g></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><g fill="none" stroke-width="1.6" stroke-linecap="round"><circle cx="10.8" cy="10.8" r="6.8"/><path d="M15.8 15.8l4.6 4.6"/></g></symbol>
+  <symbol id="i-starline" viewBox="0 0 24 24"><g fill="none" stroke-width="1.6" stroke-linejoin="round"><path d="M12 3.2l2.6 5.3 5.9.9-4.3 4.1 1 5.9-5.2-2.7-5.2 2.7 1-5.9-4.3-4.1 5.9-.9z"/></g></symbol>
+  <symbol id="i-gift" viewBox="0 0 24 24"><g fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.6" y="8.4" width="16.8" height="4" rx="1"/><rect x="5.2" y="12.4" width="13.6" height="8" rx="1.2"/><path d="M12 8.4v12M12 8.2C10.8 5 7.4 4.4 7.4 6.6c0 1.7 2.8 1.6 4.6 1.6zM12 8.2c1.2-3.2 4.6-3.8 4.6-1.6 0 1.7-2.8 1.6-4.6 1.6z"/></g></symbol>
+  <symbol id="i-cart" viewBox="0 0 24 24"><g fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3.6 4.4h2.6l2.2 10.6h9.6l2-7.8H7"/><circle cx="9.6" cy="19.2" r="1.5"/><circle cx="16.8" cy="19.2" r="1.5"/></g></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><g fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.6" y="5.2" width="16.8" height="15" rx="2.2"/><path d="M3.6 9.8h16.8M8.2 3.2v3.4M15.8 3.2v3.4"/><path d="M8.8 14.4l2.1 2.1 4.1-4.3"/></g></symbol>
+  <symbol id="i-calc" viewBox="0 0 24 24"><g fill="none" stroke-width="1.6" stroke-linecap="round"><rect x="5" y="3.2" width="14" height="17.6" rx="2.2"/><path d="M8.4 7.2h7.2"/><path d="M8.6 12h.01M12 12h.01M15.4 12h.01M8.6 15.4h.01M12 15.4h.01M15.4 15.4h.01M8.6 12v.01M12 12v.01M15.4 12v.01"/></g></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><g fill="none" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="8.6"/><path d="M12 7.4V12l3 2"/></g></symbol>
+  <symbol id="i-instagram" viewBox="0 0 24 24">
+    <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="2.5" y="2.5" width="19" height="19" rx="5"/>
+      <circle cx="12" cy="12" r="5"/>
+      <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/>
+    </g>
+  </symbol>
+</svg>
+
+<!-- PRELOADER -->
+<div id="preloader" aria-hidden="true">
+  <div class="pre-logo">
+    <img src="logo.jpg" alt="Stronovo" style="height: 40px; width: auto;">
+    <div class="word"><span>S</span><span>t</span><span>r</span><span>o</span><span>n</span><span>o</span><span>w</span><span>o</span></div>
+  </div>
+  <div class="pre-bar"><i></i></div>
+</div>
+
+<div id="progress"></div>
+
+<!-- ============ HEADER ============ -->
+<header id="header">
+  <div class="container nav">
+    <a href="#start" class="brand" aria-label="Stronovo — strona główna">
+      <img src="logo.jpg" alt="Stronovo" class="brand-mark">
+      <span class="brand-word">Stronovo<i>.</i></span>
+    </a>
+    <nav class="nav-links" aria-label="Nawigacja główna">
+      <a href="#start" class="active">Start</a>
+      <a href="#dlaczego">Dlaczego my</a>
+      <a href="#oferta">Oferta</a>
+      <a href="#opinie">Opinie</a>
+      <a href="#kontakt">Kontakt</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="#kontakt" class="btn btn-primary btn-sm">Darmowa wycena</a>
+      <button class="burger" id="burger" aria-label="Otwórz menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- MENU MOBILNE -->
+<div class="m-menu" id="mmenu">
+  <a href="#start">Start <span class="mono">01</span></a>
+  <a href="#dlaczego">Dlaczego my <span class="mono">02</span></a>
+  <a href="#oferta">Oferta <span class="mono">03</span></a>
+  <a href="#opinie">Opinie <span class="mono">04</span></a>
+  <a href="#kontakt">Kontakt <span class="mono">05</span></a>
+</div>
+
+<main>
+<!-- ============ HERO ============ -->
+<section class="hero" id="start">
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow hero-eyebrow" data-scramble>Agencja interaktywna · www / e-commerce</p>
+      <h1 class="hero-title">
+        <span class="line"><span class="line-in">Tworzymy strony</span></span>
+        <span class="line"><span class="line-in">internetowe, które pracują</span></span>
+        <span class="line"><span class="line-in">na Twój <em class="acc">sukces<svg class="u-draw" viewBox="0 0 120 12" preserveAspectRatio="none" aria-hidden="true"><path d="M3 9 C 30 3.5, 62 10.5, 117 5"/></svg></em>.</span></span>
+      </h1>
+      <p class="hero-sub">Projektujemy i wdrażamy szybkie, eleganckie witryny dla firm lokalnych i sklepów internetowych. Profesjonalny wizerunek w sieci — bez ukrytych kosztów i technicznego żargonu.</p>
+      <div class="hero-ctas">
+        <a href="#oferta" class="btn btn-primary">Zobacz cennik <svg><use href="#i-down"/></svg></a>
+        <a href="#kontakt" class="btn btn-ghost">Darmowa wycena <svg><use href="#i-arrow"/></svg></a>
+      </div>
+      <div class="hero-trust">
+        <div class="trust-item">
+          <div class="num"><span data-count="60" data-suffix="">0</span><em>+</em></div>
+          <div class="lbl">wdrożonych projektów</div>
+        </div>
+        <div class="trust-item">
+          <div class="num"><span data-count="7">0</span> <em>dni</em></div>
+          <div class="lbl">średni czas realizacji</div>
+        </div>
+        <div class="trust-item">
+          <div class="num"><span data-count="5" data-dec="1">0</span><em>/5</em></div>
+          <div class="lbl">średnia ocena klientów</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual" aria-hidden="true">
+      <div class="browser">
+        <div class="browser-bar">
+          <span class="b-dot r"></span><span class="b-dot y"></span><span class="b-dot g"></span>
+          <div class="b-url"><svg fill="none" stroke-width="1.4"><use href="#i-lock"/></svg> twojafirma.pl</div>
+        </div>
+        <div class="browser-view">
+          <img src="https://picsum.photos/seed/stronowo-agency-showcase/960/640" alt="" width="960" height="640">
+          <div class="mock-ui">
+            <div class="bar b1"></div><div class="bar b2"></div>
+            <span class="mock-btn">Umów wizytę</span>
+          </div>
+        </div>
+      </div>
+      <div class="chip chip-speed">
+        <span class="ico"><svg fill="none"><use href="#i-gauge"/></svg></span>
+        <span><span class="t1">PageSpeed 98/100</span><br><span class="t2">audyt wydajności</span></span>
+      </div>
+      <div class="chip chip-book">
+        <span class="ico"><svg fill="none"><use href="#i-check"/></svg></span>
+        <span><span class="t1">Rezerwacja 18:30</span><br><span class="t2">przyjęta automatycznie</span></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="m-track">
+      <div class="m-set">
+        <span>Strony wizytówkowe</span><i>✦</i><span>Sklepy WooCommerce</span><i>✦</i><span>Systemy rezerwacji</span><i>✦</i><span>SEO lokalne</span><i>✦</i><span>Opieka techniczna</span><i>✦</i><span>Poczta firmowa</span><i>✦</i><span>Audyty szybkości</span><i>✦</i><span>Landing pages</span><i>✦</i>
+      </div>
+      <div class="m-set">
+        <span>Strony wizytówkowe</span><i>✦</i><span>Sklepy WooCommerce</span><i>✦</i><span>Systemy rezerwacji</span><i>✦</i><span>SEO lokalne</span><i>✦</i><span>Opieka techniczna</span><i>✦</i><span>Poczta firmowa</span><i>✦</i><span>Audyty szybkości</span><i>✦</i><span>Landing pages</span><i>✦</i>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DLACZEGO STRONOVO ============ -->
+<section class="section" id="dlaczego">
+  <div class="container why-grid">
+    <div class="why-left" data-reveal>
+      <p class="eyebrow" data-scramble>Dlaczego Stronovo</p>
+      <h2 class="sec-title">Solidne fundamenty każdego projektu.</h2>
+      <p class="sec-lead">Nie sprzedajemy „stron z szablonu”. Każdy projekt budujemy od zera wokół jednego celu: Twoja strona ma realnie pomagać w zdobywaniu klientów.</p>
+      <a href="#oferta" class="link-more">Poznaj naszą ofertę <svg fill="none"><use href="#i-arrow"/></svg></a>
+    </div>
+
+    <div class="why-right">
+      <article class="value-card glow" data-reveal>
+        <span class="v-icon"><svg fill="none"><use href="#i-gauge"/></svg></span>
+        <div>
+          <h3>Szybkość działania</h3>
+          <p>Lekki kod, zoptymalizowane grafiki i dobrze dobrany hosting. Twoja strona ładuje się w ułamku sekundy — a to przekłada się na klientów i pozycje w Google.</p>
+          <div class="v-stat">&lt; 1 s · średni czas ładowania</div>
+        </div>
+        <span class="v-index">/ 01</span>
+      </article>
+
+      <article class="value-card glow" data-reveal data-delay=".08">
+        <span class="v-icon"><svg fill="none"><use href="#i-phone"/></svg></span>
+        <div>
+          <h3>Dopasowanie mobilne w standardzie</h3>
+          <p>Ponad 70% ruchu w sieci pochodzi z telefonów. Każdą realizację projektujemy najpierw z myślą o ekranie smartfona — bez żadnych dopłat.</p>
+          <div class="v-stat">100% projektów · pełne RWD</div>
+        </div>
+        <span class="v-index">/ 02</span>
+      </article>
+
+      <article class="value-card glow" data-reveal data-delay=".16">
+        <span class="v-icon"><svg fill="none"><use href="#i-shield"/></svg></span>
+        <div>
+          <h3>Bezpieczeństwo</h3>
+          <p>Certyfikat SSL, regularne kopie zapasowe i aktualne oprogramowanie. Twoja strona i dane klientów są pod stałą ochroną.</p>
+          <div class="v-stat">SSL + cotygodniowe backupy</div>
+        </div>
+        <span class="v-index">/ 03</span>
+      </article>
+
+      <article class="value-card glow" data-reveal data-delay=".24">
+        <span class="v-icon"><svg fill="none"><use href="#i-headset"/></svg></span>
+        <div>
+          <h3>Wsparcie po wdrożeniu</h3>
+          <p>Nie znikamy po oddaniu projektu. Pomagamy w zmianach treści, aktualizacjach cenników i zdjęć — w ramach prostych pakietów opieki.</p>
+          <div class="v-stat">opieka już od 149 zł / mies.</div>
+        </div>
+        <span class="v-index">/ 04</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CENNIK ============ -->
+<section class="section" id="oferta">
+  <div class="container">
+    <div class="sec-head" data-reveal>
+      <div>
+        <p class="eyebrow" data-scramble>Cennik i oferta</p>
+        <h2 class="sec-title">Przejrzyste zasady.<br>Uczciwe ceny.</h2>
+      </div>
+      <p class="sec-lead" style="margin-top:0">Konkretne pakiety, jasny zakres, zero ukrytych kosztów. Wybierz punkt startowy — resztę dopasujemy podczas darmowej wyceny.</p>
+    </div>
+
+    <div class="tabs-wrap" data-reveal>
+      <div class="tabs" role="tablist" aria-label="Sekcje cennika">
+        <span class="tab-ind" id="tabInd"></span>
+        <button class="tab-btn active" data-tab="p1" role="tab" aria-selected="true">Pakiety startowe</button>
+        <button class="tab-btn" data-tab="p2" role="tab" aria-selected="false">Usługi dodatkowe</button>
+        <button class="tab-btn" data-tab="p3" role="tab" aria-selected="false">Opieka abonamentowa</button>
+        <button class="tab-btn" data-tab="p4" role="tab" aria-selected="false">Moduły zaawansowane</button>
+      </div>
+    </div>
+
+    <!-- PANEL 1 -->
+    <div class="panel active" id="p1" role="tabpanel">
+      <div class="plans">
+        <article class="plan glow" data-reveal>
+          <div class="plan-name"><svg fill="none"><use href="#i-globe"/></svg> Landing Page / Wizytówka</div>
+          <div class="plan-tag">Strona typu single-page</div>
+          <div class="plan-price">599<span class="dec">,99</span><span class="cur">zł</span></div>
+          <p class="plan-desc">Idealny start — elegancka, przewijana w dół strona prezentująca Twoją firmę.</p>
+          <hr>
+          <div class="feat"><svg fill="none"><use href="#i-check"/></svg><span>Sekcje: <strong>O nas · Oferta · Galeria · Kontakt</strong></span></div>
+          <div class="feat"><svg fill="none"><use href="#i-check"/></svg><span>Projekt dopasowany do Twojej branży</span></div>
+          <div class="feat"><svg fill="none"><use href="#i-check"/></svg><span>Formularz kontaktowy i mapa dojazdu</span></div>
+          <div class="gratis"><svg fill="none"><use href="#i-gift"/></svg><span><strong>GRATIS:</strong> pełne dostosowanie pod telefony i tablety</span></div>
+          <button class="btn btn-ghost btn-block" data-plan="landing">Wybieram ten pakiet <svg fill="none"><use href="#i-arrow"/></svg></button>
+          <div class="plan-meta">czas realizacji · ok. 7 dni</div>
+        </article>
+
+        <article class="plan featured glow" data-reveal data-delay=".1">
+          <span class="plan-badge">Najczęściej wybierany</span>
+          <div class="plan-name"><svg fill="none"><use href="#i-globe"/></svg> Wielostronicowa Strona Firmowa</div>
+          <div class="plan-tag">Pełny serwis firmy</div>
+          <div class="plan-price">1199<span class="dec">,99</span><span class="cur">zł</span></div>
+          <p class="plan-desc">Rozbudowana strona z osobnymi zakładkami — kompletny obraz Twojej działalności.</p>
+          <hr>
+          <div class="feat"><svg fill="none"><use href="#i-check"/></svg><span><strong>4–8 zakładek</strong>, np. Główna · O nas · Oferta · Cennik · Kontakt</span></div>
+          <div class="feat"><svg fill="none"><use href="#i-check"/></svg><span>Panel do samodzielnej edycji treści</span></div>
+          <div class="feat"><svg fill="none"><use href="#i-check"/></svg><span>Struktura przygotowana pod SEO</span></div>
+          <div class="gratis"><svg fill="none"><use href="#i-gift"/></svg><span><strong>GRATIS:</strong> pełne dostosowanie pod telefony i tablety</span></div>
+          <button class="btn btn-primary btn-block" data-plan="firmowa">Wybieram ten pakiet <svg fill="none"><use href="#i-arrow"/></svg></button>
+          <div class="plan-meta">czas realizacji · ok. 10–14 dni</div>
+        </article>
+      </div>
+    </div>
+
+    <!-- PANEL 2 -->
+    <div class="panel" id="p2" role="tabpanel">
+      <div class="addons">
+        <article class="addon glow" data-reveal>
+          <span class="v-icon"><svg fill="none"><use href="#i-globe"/></svg></span>
+          <div><h3>Konfiguracja domeny i hostingu</h3><p>Rejestracja domeny, dobór szybkiego hostingu, pełna konfiguracja i podpięcie strony.</p></div>
+          <div class="addon-price">139,99 zł<small>jednorazowo</small></div>
+        </article>
+        <article class="addon glow" data-reveal data-delay=".06">
+          <span class="v-icon"><svg fill="none"><use href="#i-mail"/></svg></span>
+          <div><h3>Poczta we własnej domenie</h3><p>Profesjonalny adres w stylu <strong>kontakt@nazwafirmy.pl</strong> — konfiguracja skrzynek na wszystkich urządzeniach.</p></div>
+          <div class="addon-price">99,99 zł<small>jednorazowo</small></div>
+        </article>
+        <article class="addon glow" data-reveal data-delay=".12">
+          <span class="v-icon"><svg fill="none"><use href="#i-search"/></svg></span>
+          <div><h3>Podstawowa optymalizacja SEO</h3><p>Metatagi, opisy Google, nagłówki H1/H2 oraz optymalizacja szybkości — fundament widoczności w wyszukiwarce.</p></div>
+          <div class="addon-price">329,99 zł<small>jednorazowo</small></div>
+        </article>
+        <article class="addon glow" data-reveal data-delay=".18">
+          <span class="v-icon"><svg fill="none"><use href="#i-starline"/></svg></span>
+          <div><h3>Integracja opinii z Google / FB</h3><p>Widget z aktualnymi opiniami z wizytówki Google i Facebooka — buduje zaufanie od pierwszej sekundy.</p></div>
+          <div class="addon-price">99,99 zł<small>jednorazowo</small></div>
+        </article>
+      </div>
+    </div>
+
+    <!-- PANEL 3 -->
+    <div class="panel" id="p3" role="tabpanel">
+      <div class="plans">
+        <article class="plan glow" data-reveal>
+          <div class="plan-name"><svg fill="none"><use href="#i-shield"/></svg> Pakiet Basic</div>
+          <div class="plan-tag">Opieka techniczna</div>
+          <div class="plan-price">149<span class="cur">zł</span><span class="per">/ mies.</span></div>
+          <p class="plan-desc">Twoja strona zawsze aktualna i bezpieczna — Ty zajmujesz się firmą.</p>
+          <hr>
+          <div class="feat"><svg fill="none"><use href="#i-check"/></svg><span>Regularne aktualizacje systemu i wtyczek</span></div>
+          <div class="feat"><svg fill="none"><use href="#i-check"/></svg><span>Kopie zapasowe <strong>raz w tygodniu</strong></span></div>
+          <div class="feat"><svg fill="none"><use href="#i-check"/></svg><span>Stały monitoring bezpieczeństwa</span></div>
+          <div class="feat"><svg fill="none"><use href="#i-check"/></svg><span>Pomoc techniczna w dni robocze</span></div>
+          <button class="btn btn-ghost btn-block" data-plan="opieka">Wybieram pakiet <svg fill="none"><use href="#i-arrow"/></svg></button>
+          <div class="plan-meta">umowa bez zobowiązań</div>
+        </article>
+
+        <article class="plan featured glow" data-reveal data-delay=".1">
+          <span class="plan-badge">Polecany</span>
+          <div class="plan-name"><svg fill="none"><use href="#i-headset"/></svg> Pakiet Pro</div>
+          <div class="plan-tag">Opieka + poprawki</div>
+          <div class="plan-price">249,99<span class="cur">zł</span><span class="per">/ mies.</span></div>
+          <p class="plan-desc">Pełen zakres Basic oraz comiesięczna pula czasu na zmiany w treści strony.</p>
+          <hr>
+          <div class="feat"><svg fill="none"><use href="#i-check"/></svg><span><strong>Wszystko z pakietu Basic</strong></span></div>
+          <div class="feat"><svg fill="none"><use href="#i-check"/></svg><span>Do <strong>1,5 h pracy miesięcznie</strong> na zmiany</span></div>
+          <div class="feat"><svg fill="none"><use href="#i-check"/></svg><span>Aktualizacje treści, cenników i zdjęć</span></div>
+          <div class="feat"><svg fill="none"><use href="#i-check"/></svg><span>Priorytetowy kontakt i szybkie wdrożenia</span></div>
+          <button class="btn btn-primary btn-block" data-plan="opieka">Wybieram pakiet <svg fill="none"><use href="#i-arrow"/></svg></button>
+          <div class="plan-meta">umowa bez zobowiązań</div>
+        </article>
+      </div>
+    </div>
+
+    <!-- PANEL 4 -->
+    <div class="panel" id="p4" role="tabpanel">
+      <div class="modules">
+        <article class="module glow" data-reveal>
+          <span class="v-icon"><svg fill="none"><use href="#i-cart"/></svg></span>
+          <h3>Sklep Internetowy</h3>
+          <div class="m-price">2 900 zł</div>
+          <p>Kompletny sklep na WooCommerce — gotowy do przyjmowania zamówień i płatności.</p>
+          <div class="feat"><svg fill="none"><use href="#i-check"/></svg><span>Do <strong>20 produktów</strong> na start</span></div>
+          <div class="feat"><svg fill="none"><use href="#i-check"/></svg><span>Szybkie płatności <strong>BLIK / Przelewy24</strong></span></div>
+          <div class="feat"><svg fill="none"><use href="#i-check"/></svg><span>Integracja z firmami kurierskimi</span></div>
+          <button class="btn btn-ghost" data-plan="sklep">Zamawiam sklep <svg fill="none"><use href="#i-arrow"/></svg></button>
+        </article>
+
+        <article class="module glow" data-reveal data-delay=".08">
+          <span class="v-icon"><svg fill="none"><use href="#i-cal"/></svg></span>
+          <h3>System Rezerwacji Online</h3>
+          <div class="m-price">650 zł</div>
+          <p>Kalendarz rezerwacji wizyt dla fryzjerów, gabinetów, warsztatów i usług.</p>
+          <div class="feat"><svg fill="none"><use href="#i-check"/></svg><span>Rezerwacje <strong>24/7</strong>, także w nocy</span></div>
+          <div class="feat"><svg fill="none"><use href="#i-check"/></svg><span>Automatyczne przypomnienia</span></div>
+          <div class="feat"><svg fill="none"><use href="#i-check"/></svg><span>Panel zarządzania grafikiem</span></div>
+          <button class="btn btn-ghost" data-plan="rezerwacje">Zamawiam moduł <svg fill="none"><use href="#i-arrow"/></svg></button>
+        </article>
+
+        <article class="module glow" data-reveal data-delay=".16">
+          <span class="v-icon"><svg fill="none"><use href="#i-calc"/></svg></span>
+          <h3>Interaktywny Formularz Wyceny</h3>
+          <div class="m-price">399,99 zł</div>
+          <p>Kalkulator wstępnego kosztu usługi — klient zna cenę, zanim do Ciebie zadzwoni.</p>
+          <div class="feat"><svg fill="none"><use href="#i-check"/></svg><span>Logika wyceny dopasowana do branży</span></div>
+          <div class="feat"><svg fill="none"><use href="#i-check"/></svg><span>Wynik + zapytanie trafiają na Twój e-mail</span></div>
+          <div class="feat"><svg fill="none"><use href="#i-check"/></svg><span>Więcej konkretnych zapytań ofertowych</span></div>
+          <button class="btn btn-ghost" data-plan="formularz">Zamawiam moduł <svg fill="none"><use href="#i-arrow"/></svg></button>
+        </article>
+      </div>
+    </div>
+
+    <div class="oferta-note" data-reveal>
+      <div>
+        <h3>Nie wiesz, który pakiet będzie najlepszy?</h3>
+        <p>Opisz nam swój biznes — w 24 godziny dostaniesz bezpłatną, niezobowiązującą wycenę.</p>
+      </div>
+      <a href="#kontakt" class="btn btn-primary">Darmowa wycena <svg fill="none"><use href="#i-arrow"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ OPINIE ============ -->
+<section class="section" id="opinie">
+  <div class="container">
+    <div class="sec-head" data-reveal>
+      <div>
+        <p class="eyebrow">Opinie klientów</p>
+        <h2 class="sec-title">Zaufali nam właściciele<br>lokalnych firm.</h2>
+      </div>
+      <div class="summary-box">
+        <div class="big">5<em>,0</em></div>
+        <div class="stars lg" aria-label="Ocena 5 na 5">
+          <svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg>
+        </div>
+        <div class="src">86 opinii · Google &amp; Facebook</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container car-wrap" data-reveal>
+    <div class="car-track" id="carTrack" tabindex="0" aria-label="Karuzela opinii">
+
+      <article class="t-card t-intro">
+        <div class="huge">5<em>,0</em></div>
+        <div class="stars" style="margin:14px 0 4px"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></div>
+        <p>Komplet ocen 5/5 od firm, które dzięki nowej stronie zdobywają klientów każdego dnia.</p>
+      </article>
+
+      <article class="t-card glow">
+        <div class="t-top"><div class="stars" aria-label="5/5"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></div><span class="t-mark">”</span></div>
+        <blockquote>Długo zwlekałem z założeniem strony, bo wyceny innych agencji mnie przerażały. Chłopaki ze Stronovo zrobili mi prostą wizytówkę za 600 zł w niecały tydzień. Strona chodzi śmigająco na telefonach, a klienci w końcu bez problemu trafiają do warsztatu.</blockquote>
+        <div class="t-author">
+          <img src="https://picsum.photos/seed/stronovo-marek/120/120?grayscale" alt="Marek Ratajczak" width="46" height="46" loading="lazy">
+          <div><div class="nm">Marek Ratajczak</div><div class="rl">Właściciel warsztatu Auto-Fix</div></div>
+        </div>
+      </article>
+
+      <article class="t-card glow">
+        <div class="t-top"><div class="stars" aria-label="5/5"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></div><span class="t-mark">”</span></div>
+        <blockquote>Skorzystałam z opcji strony firmowej wraz z modułem rezerwacji online. To była najlepsza decyzja dla mojego salonu. Dziewczyny zapisują się na wizyty nawet w nocy, a ja nie muszę odbierać telefonów podczas zabiegów. Bardzo profesjonalne podejście!</blockquote>
+        <div class="t-author">
+          <img src="https://picsum.photos/seed/stronovo-karolina/120/120?grayscale" alt="Karolina Nowicka" width="46" height="46" loading="lazy">
+          <div><div class="nm">Karolina Nowicka</div><div class="rl">Salon Kosmetyczny „Elegance”</div></div>
+        </div>
+      </article>
+
+      <article class="t-card glow">
+        <div class="t-top"><div class="stars" aria-label="5/5"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></div><span class="t-mark">”</span></div>
+        <blockquote>Zamówiłem wizytówkę single-page z dołożeniem optymalizacji SEO i podpięciem wizytówki Google. Po miesiącu zacząłem dostawać zlecenia bezpośrednio z wyszukiwarki. Wydatek zwrócił mi się po pierwszych dwóch roboczogodzinach.</blockquote>
+        <div class="t-author">
+          <img src="https://picsum.photos/seed/stronovo-tomasz/120/120?grayscale" alt="Tomasz Mazur" width="46" height="46" loading="lazy">
+          <div><div class="nm">Tomasz Mazur</div><div class="rl">Usługi Hydrauliczne i Gazowe</div></div>
+        </div>
+      </article>
+
+      <article class="t-card glow">
+        <div class="t-top"><div class="stars" aria-label="5/5"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></div><span class="t-mark">”</span></div>
+        <blockquote>Szukałam kogoś, kto stworzy stonowaną, elegancką stronę i przejmie całą obsługę techniczną. Pakiet Pro z opieki technicznej sprawdza się idealnie — cennik mam zawsze aktualny, a strona działa bezawaryjnie.</blockquote>
+        <div class="t-author">
+          <img src="https://picsum.photos/seed/stronovo-agnieszka/120/120?grayscale" alt="dr n. med. Agnieszka Wieczorek" width="46" height="46" loading="lazy">
+          <div><div class="nm">dr n. med. Agnieszka Wieczorek</div><div class="rl">Gabinet Stomatologiczny</div></div>
+        </div>
+      </article>
+
+      <article class="t-card glow">
+        <div class="t-top"><div class="stars" aria-label="5/5"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></div><span class="t-mark">”</span></div>
+        <blockquote>Wdrożenie sklepu na WooCommerce przebiegło zaskakująco gładko. Płatności BLIK działają bez zarzutu, strona jest szybka, a klienci chwalą prosty proces zakupowy. Warto było zaufać Stronovo.</blockquote>
+        <div class="t-author">
+          <img src="https://picsum.photos/seed/stronovo-piotr/120/120?grayscale" alt="Piotr Grzelak" width="46" height="46" loading="lazy">
+          <div><div class="nm">Piotr Grzelak</div><div class="rl">Sklep meblowy LoftWood</div></div>
+        </div>
+      </article>
+
+      <article class="t-card glow">
+        <div class="t-top"><div class="stars" aria-label="5/5"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></div><span class="t-mark">”</span></div>
+        <blockquote>Świetny kontakt, zero ściemniania i branżowego żargonu. Przetłumaczyli mi wszystko na prosty język, podpięli maila firmowego i domenę. Strona wygląda drożej niż w rzeczywistości kosztowała.</blockquote>
+        <div class="t-author">
+          <img src="https://picsum.photos/seed/stronovo-krzysztof/120/120?grayscale" alt="Krzysztof Dudek" width="46" height="46" loading="lazy">
+          <div><div class="nm">Krzysztof Dudek</div><div class="rl">Firma Budowlano-Wykończeniowa</div></div>
+        </div>
+      </article>
+    </div>
+
+    <div class="car-nav">
+      <button class="car-btn" id="carPrev" aria-label="Poprzednia opinia"><svg fill="none"><use href="#i-chev-l"/></svg></button>
+      <button class="car-btn" id="carNext" aria-label="Następna opinia"><svg fill="none"><use href="#i-chev-r"/></svg></button>
+      <div class="car-progress"><i id="carProg"></i></div>
+      <span class="car-count" id="carCount">01 / 07</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ KONTAKT ============ -->
+<section class="section" id="kontakt">
+  <div class="container contact-grid">
+    <div data-reveal>
+      <p class="eyebrow">Kontakt</p>
+      <h2 class="sec-title">Porozmawiajmy o Twoim projekcie.</h2>
+      <p class="sec-lead">Napisz kilka słów o swojej firmie — wrócimy z propozycją i wyceną maksymalnie w 24 godziny.</p>
+
+      <div class="c-list">
+        <div class="c-item">
+          <span class="v-icon"><svg fill="none"><use href="#i-mail"/></svg></span>
+          <div><div class="lbl">E-mail</div><a class="val" href="mailto:stronowopl1@gmail.com">stronowopl1@gmail.com</a></div>
+        </div>
+        <div class="c-item">
+          <span class="v-icon"><svg fill="none"><use href="#i-phone"/></svg></span>
+          <div><div class="lbl">Telefon</div><a class="val" href="tel:+48889878486">+48 889 878 486</a></div>
+        </div>
+        <div class="c-item">
+          <span class="v-icon"><svg fill="none"><use href="#i-clock"/></svg></span>
+          <div><div class="lbl">Godziny pracy</div><div class="val">Pn–Pt · 9:00–17:00</div></div>
+        </div>
+        <div class="c-item">
+          <span class="v-icon"><svg fill="none"><use href="#i-globe"/></svg></span>
+          <div><div class="lbl">Zasięg</div><div class="val">Cała Polska — pracujemy zdalnie</div></div>
+        </div>
+      </div>
+      <div class="avail"><span class="dot"></span> Wolne 2 terminy w tym miesiącu</div>
+    </div>
+
+    <div class="form-card glow" data-reveal data-delay=".1">
+      <form id="contactForm" novalidate>
+        <div class="form-grid">
+          <div class="field">
+            <label for="f-name">Imię *</label>
+            <input type="text" id="f-name" name="name" placeholder="np. Anna" autocomplete="name">
+            <span class="msg">Podaj swoje imię.</span>
+          </div>
+          <div class="field">
+            <label for="f-email">E-mail *</label>
+            <input type="email" id="f-email" name="email" placeholder="anna@twojafirma.pl" autocomplete="email">
+            <span class="msg">Podaj poprawny adres e-mail.</span>
+          </div>
+          <div class="field full">
+            <label for="f-service">Interesująca Cię usługa</label>
+            <select id="f-service" name="service">
+              <option value="" selected>— wybierz z listy —</option>
+              <option value="landing">Landing Page / Wizytówka (599,99 zł)</option>
+              <option value="firmowa">Wielostronicowa Strona Firmowa (1199,99 zł)</option>
+              <option value="sklep">Sklep internetowy WooCommerce</option>
+              <option value="rezerwacje">System rezerwacji online</option>
+              <option value="formularz">Interaktywny formularz wyceny</option>
+              <option value="seo">Optymalizacja SEO</option>
+              <option value="opieka">Opieka techniczna / abonament</option>
+              <option value="inne">Inne / jeszcze nie wiem</option>
+            </select>
+          </div>
+          <div class="field full">
+            <label for="f-msg">Wiadomość *</label>
+            <textarea id="f-msg" name="message" placeholder="Opisz krótko swoją firmę i czego potrzebujesz…"></textarea>
+            <span class="msg">Napisz kilka słów o projekcie.</span>
+          </div>
+          <p class="consent">Wysyłając formularz akceptujesz przetwarzanie danych w celu odpowiedzi na zapytanie. Żadnego spamu — obiecujemy.</p>
+          <div class="form-foot">
+            <button type="submit" class="btn btn-primary" id="submitBtn">
+              <span class="btn-label">Wyślij wiadomość</span>
+              <span class="spinner" aria-hidden="true"></span>
+              <svg class="btn-label"><use href="#i-arrow"/></svg>
+            </button>
+            <span class="hint">odpowiadamy &lt; 24 h</span>
+          </div>
+        </div>
+      </form>
+
+      <div class="form-success" id="formSuccess" aria-live="polite">
+        <svg class="ok-ring" viewBox="0 0 84 84" aria-hidden="true">
+          <circle cx="42" cy="42" r="40"/>
+          <path d="M27 43l10 10 20-22"/>
+        </svg>
+        <h3>Dziękujemy!</h3>
+        <p>Twoja wiadomość dotarła do zespołu Stronovo. Odezwiemy się na podany adres e-mail w ciągu 24 godzin.</p>
+        <button class="btn btn-ghost" id="formReset">Wyślij kolejną wiadomość</button>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="container">
+    <div class="f-grid">
+      <div class="f-brand">
+        <a href="#start" class="brand">
+          <img src="logo.jpg" alt="Stronovo" class="brand-mark">
+          <span class="brand-word">Stronovo<i>.</i></span>
+        </a>
+        <p>Strony, które pracują na Twój sukces. Projektujemy je z dbałością o detal, szybkość i spokój naszych klientów.</p>
+      </div>
+      <div class="f-col">
+        <h4>Menu</h4>
+        <a href="#start">Start</a>
+        <a href="#dlaczego">Dlaczego my</a>
+        <a href="#oferta">Oferta</a>
+        <a href="#opinie">Opinie</a>
+        <a href="#kontakt">Kontakt</a>
+      </div>
+      <div class="f-col">
+        <h4>Oferta</h4>
+        <a data-tablink="p1" href="#oferta">Pakiety startowe</a>
+        <a data-tablink="p2" href="#oferta">Usługi dodatkowe</a>
+        <a data-tablink="p3" href="#oferta">Opieka abonamentowa</a>
+        <a data-tablink="p4" href="#oferta">Moduły zaawansowane</a>
+      </div>
+      <div class="f-col">
+        <h4>Kontakt</h4>
+        <li>stronowopl1@gmail.com</li>
+        <li>+48 889 878 486</li>
+        <li>Pn–Pt · 9:00–17:00</li>
+        <li>Cała Polska · zdalnie</li>
+      </div>
+    </div>
+    <div class="f-bottom">
+      <p>© <span id="year">2025</span> Stronovo. Wszelkie prawa zastrzeżone.</p>
+      <p class="craft">Zaprojektowane z <i>◆</i> dbałością o detal</p>
+      <button class="to-top" id="toTop" aria-label="Wróć na górę strony"><svg fill="none"><use href="#i-up"/></svg></button>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  const RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const $  = (s,c)=> (c||document).querySelector(s);
+  const $$ = (s,c)=> Array.from((c||document).querySelectorAll(s));
+
+  /* ---------- PRELOADER ---------- */
+  const boot = ()=> document.body.classList.add('is-loaded');
+  if (RM) { boot(); }
+  else {
+    window.addEventListener('load', ()=> setTimeout(boot, 950));
+    setTimeout(boot, 2600); /* bezpiecznik */
+  }
+
+  /* ---------- ROK ---------- */
+  $('#year').textContent = new Date().getFullYear();
+
+  /* ---------- PASEK POSTĘPU + HEADER ---------- */
+  const progress = $('#progress'), header = $('#header');
+  let ticking = false;
+  function onScroll(){
+    if(ticking) return; ticking = true;
+    requestAnimationFrame(()=>{
+      const h = document.documentElement;
+      const max = h.scrollHeight - h.clientHeight;
+      progress.style.width = (max>0 ? (h.scrollTop/max)*100 : 0) + '%';
+      header.classList.toggle('scrolled', h.scrollTop > 40);
+      ticking = false;
+    });
+  }
+  window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+  /* ---------- MENU MOBILNE ---------- */
+  const burger = $('#burger'), mmenu = $('#mmenu');
+  function closeMenu(){ burger.classList.remove('open'); mmenu.classList.remove('open'); burger.setAttribute('aria-expanded','false'); document.body.style.overflow=''; }
+  burger.addEventListener('click', ()=>{
+    const open = !mmenu.classList.contains('open');
+    burger.classList.toggle('open', open); mmenu.classList.toggle('open', open);
+    burger.setAttribute('aria-expanded', open); document.body.style.overflow = open ? 'hidden' : '';
+  });
+  $$('#mmenu a').forEach(a=> a.addEventListener('click', closeMenu));
+
+  /* ---------- SCROLLSPY ---------- */
+  const navLinks = $$('.nav-links a');
+  const spy = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        navLinks.forEach(a=> a.classList.toggle('active', a.getAttribute('href') === '#'+e.target.id));
+      }
+    });
+  },{rootMargin:'-40% 0px -55% 0px'});
+  ['start','dlaczego','oferta','opinie','kontakt'].forEach(id=>{ const s=document.getElementById(id); if(s) spy.observe(s); });
+
+  /* ---------- REVEAL ---------- */
+  const io = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const d = e.target.getAttribute('data-delay');
+        if(d) e.target.style.transitionDelay = d + 's';
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  },{threshold:.12, rootMargin:'0px 0px -40px 0px'});
+  $$('[data-reveal]').forEach(el=> io.observe(el));
+
+  /* ---------- SCRAMBLE DECODE ---------- */
+  const POOL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#%&';
+  function scramble(el){
+    const orig = el.textContent;
+    let frame = 0;
+    const total = orig.length * 3 + 8;
+    const tick = ()=>{
+      let out = '';
+      for(let i=0;i<orig.length;i++){
+        if(orig[i] === ' '){ out += ' '; continue; }
+        out += (frame > i*3 + 6) ? orig[i] : POOL[Math.floor(Math.random()*POOL.length)];
+      }
+      el.textContent = out;
+      if(frame++ < total) requestAnimationFrame(tick); else el.textContent = orig;
+    };
+    tick();
+  }
+  if(!RM){
+    const sio = new IntersectionObserver(entries=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ scramble(e.target); sio.unobserve(e.target); } });
+    },{threshold:.6});
+    $$('[data-scramble]').forEach(el=> sio.observe(el));
+  }
+
+  /* ---------- LICZNIKI ---------- */
+  function animateCount(el){
+    const target = parseFloat(el.getAttribute('data-count'));
+    const dec = parseInt(el.getAttribute('data-dec')||'0',10);
+    if(RM){ el.textContent = dec ? target.toFixed(dec).replace('.',',') : target; return; }
+    const dur = 1400, t0 = performance.now();
+    const step = (t)=>{
+      const p = Math.min((t-t0)/dur, 1);
+      const e = 1 - Math.pow(1-p, 4);
+      const v = target * e;
+      el.textContent = dec ? v.toFixed(dec).replace('.',',') : Math.round(v);
+      if(p<1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+  const cio = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ animateCount(e.target); cio.unobserve(e.target); } });
+  },{threshold:.6});
+  $$('[data-count]').forEach(el=> cio.observe(el));
+
+  /* ---------- ZAKŁADKI CENNIKA ---------- */
+  const tabBtns = $$('.tab-btn'), tabInd = $('#tabInd');
+  function setInd(btn){
+    tabInd.style.width = btn.offsetWidth + 'px';
+    tabInd.style.transform = 'translateX(' + btn.offsetLeft + 'px)';
+  }
+  function activateTab(id){
+    tabBtns.forEach(b=>{
+      const on = b.getAttribute('data-tab') === id;
+      b.classList.toggle('active', on); b.setAttribute('aria-selected', on);
+      if(on) setInd(b);
+    });
+    $$('.panel').forEach(p=> p.classList.toggle('active', p.id === id));
+  }
+  tabBtns.forEach(b=> b.addEventListener('click', ()=> activateTab(b.getAttribute('data-tab'))));
+  window.addEventListener('resize', ()=> setInd($('.tab-btn.active')));
+  window.addEventListener('load',  ()=> setInd($('.tab-btn.active')));
+  setInd($('.tab-btn.active'));
+  /* linki ze stopki otwierające konkretną zakładkę */
+  $$('[data-tablink]').forEach(a=> a.addEventListener('click', ()=> activateTab(a.getAttribute('data-tablink'))));
+
+  /* ---------- PRESELECT USŁUGI Z PRZYCISKÓW ---------- */
+  const serviceSel = $('#f-service');
+  $$('[data-plan]').forEach(btn=> btn.addEventListener('click', ()=>{
+    serviceSel.value = btn.getAttribute('data-plan');
+    document.getElementById('kontakt').scrollIntoView({behavior: RM ? 'auto' : 'smooth'});
+    setTimeout(()=> $('#f-name').focus({preventScroll:true}), 700);
+  }));
+
+  /* ---------- KARUZELA OPINII ---------- */
+  const track = $('#carTrack'), prog = $('#carProg'), count = $('#carCount');
+  const cards = $$('.t-card', track);
+  function cardStep(){ return cards[0].getBoundingClientRect().width + 20; }
+  function updateProg(){
+    const max = track.scrollWidth - track.clientWidth;
+    prog.style.width = (max>0 ? (track.scrollLeft/max)*100 : 0) + '%';
+    const idx = Math.min(cards.length-1, Math.round(track.scrollLeft / cardStep()));
+    count.textContent = String(idx+1).padStart(2,'0') + ' / ' + String(cards.length).padStart(2,'0');
+  }
+  track.addEventListener('scroll', updateProg, {passive:true}); updateProg();
+
+  $('#carNext').addEventListener('click', ()=>{
+    const max = track.scrollWidth - track.clientWidth;
+    track.scrollBy({left: track.scrollLeft + cardStep() > max - 10 ? -max : cardStep(), behavior: RM?'auto':'smooth'});
+  });
+  $('#carPrev').addEventListener('click', ()=> track.scrollBy({left:-cardStep(), behavior: RM?'auto':'smooth'}));
+
+  /* przeciąganie */
+  let down=false, startX=0, startL=0;
+  track.addEventListener('pointerdown', e=>{ down=true; startX=e.clientX; startL=track.scrollLeft; track.classList.add('dragging'); track.setPointerCapture(e.pointerId); });
+  track.addEventListener('pointermove', e=>{ if(down) track.scrollLeft = startL - (e.clientX - startX); });
+  ['pointerup','pointercancel','pointerleave'].forEach(ev=> track.addEventListener(ev, ()=>{ down=false; track.classList.remove('dragging'); }));
+
+  /* auto-przewijanie */
+  if(!RM){
+    let auto = setInterval(nextAuto, 5600);
+    function nextAuto(){
+      const max = track.scrollWidth - track.clientWidth;
+      if(track.scrollLeft >= max - 10) track.scrollTo({left:0, behavior:'smooth'});
+      else track.scrollBy({left:cardStep(), behavior:'smooth'});
+    }
+    const pause = ()=> clearInterval(auto);
+    const resume = ()=>{ clearInterval(auto); auto = setInterval(nextAuto, 5600); };
+    track.addEventListener('pointerenter', pause);
+    track.addEventListener('pointerleave', resume);
+    track.addEventListener('focusin', pause);
+    track.addEventListener('focusout', resume);
+  }
+
+  /* ---------- POŚWIATA KURSORA NA KARTACH ---------- */
+  if(!RM && window.matchMedia('(hover:hover)').matches){
+    $$('.glow').forEach(card=>{
+      card.addEventListener('pointermove', e=>{
+        const r = card.getBoundingClientRect();
+        card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+        card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+      });
+    });
+  }
+
+  /* ---------- FORMULARZ + DISCORD WEBHOOK ---------- */
+  const form = $('#contactForm'), success = $('#formSuccess'), submitBtn = $('#submitBtn');
+  const DISCORD_WEBHOOK_URL = "https://canary.discord.com/api/webhooks/1543705554902458469/t6CKEhTGaOhcdzT7hXVYd_3bHGMeCh_ljPlMQUK86okjgX9JpgKETeNmHULwXCwwN2Rf";
+
+  function setErr(input, bad){ input.closest('.field').classList.toggle('err', bad); return !bad; }
+  
+  form.addEventListener('submit', e=>{
+    e.preventDefault();
+    const name = $('#f-name'), email = $('#f-email'), msg = $('#f-msg'), service = $('#f-service');
+    let ok = true;
+    
+    ok = setErr(name, name.value.trim().length < 2) && ok;
+    ok = setErr(email, !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.value.trim())) && ok;
+    ok = setErr(msg, msg.value.trim().length < 5) && ok;
+    if(!ok) return;
+
+    submitBtn.classList.add('loading');
+
+    const webhookData = {
+      content: "🔔 **Nowa wiadomość ze strony Stronovo!**",
+      embeds: [{
+        title: "Szczegóły zapytania",
+        color: 696227,
+        fields: [
+          { name: "👤 Imię", value: name.value.trim(), inline: true },
+          { name: "📧 E-mail", value: `[${email.value.trim()}](mailto:${email.value.trim()})`, inline: true },
+          { name: "🛠️ Interesująca usługa", value: service.options[service.selectedIndex].text, inline: false },
+          { name: "💬 Wiadomość", value: msg.value.trim() }
+        ],
+        footer: { text: "Stronovo - Formularz kontaktowy" },
+        timestamp: new Date().toISOString()
+      }]
+    };
+
+    fetch(DISCORD_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(webhookData)
+    })
+    .then(response => {
+      if (!response.ok) console.error("Błąd wysyłania do Discorda:", response.statusText);
+    })
+    .catch(error => {
+      console.error("Błąd sieci przy wysyłaniu do Discorda:", error);
+    })
+    .finally(() => {
+      setTimeout(()=>{
+        submitBtn.classList.remove('loading');
+        success.classList.add('show');
+        form.reset();
+      }, RM ? 50 : 1100);
+    });
+  });
+
+  ['input','change'].forEach(ev=> form.addEventListener(ev, e=>{
+    if(e.target.matches('input,textarea,select')) e.target.closest('.field').classList.remove('err');
+  }));
+  
+  $('#formReset').addEventListener('click', ()=>{
+    success.classList.remove('show'); form.reset();
+    setTimeout(()=> $('#f-name').focus(), 300);
+  });
+
+  /* ---------- POWRÓT NA GÓRĘ ---------- */
+  $('#toTop').addEventListener('click', ()=> window.scrollTo({top:0, behavior: RM?'auto':'smooth'}));
+})();
+</script>
+<!-- FLOATING INSTAGRAM CTA -->
+<a href="https://www.instagram.com/stronowopl" target="_blank" rel="noopener noreferrer" class="ig-float" aria-label="Zaobserwuj nas na Instagramie">
+  <span class="ig-float-icon">
+    <svg><use href="#i-instagram"/></svg>
+  </span>
+  <span class="ig-float-text">
+    <span class="ig-main">Zaobserwuj nas na Instagramie</span>
+    <span class="ig-sub">kliknij tutaj <svg class="ig-arrow"><use href="#i-arrow"/></svg></span>
+  </span>
+</a>
+</body>
+</html>
